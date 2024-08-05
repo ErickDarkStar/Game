@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jogo da bolinha</title>
+    <style>
+        body, html {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            text-align: center;
+            background: url('img/fundo.avif') no-repeat center center fixed;
+            background-size: cover;
+        }
+        #gameContainer {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .heart {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            background-image: url('img/bola.webp');
+            background-size: cover;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .heart:hover {
+            transform: scale(1.2);
+        }
+        .message {
+            font-size: 24px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5); /* Ajuste da transparência */
+            padding: 30px;
+            margin: 230px;
+            margin-left: 400px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: calc(100% - 40px);
+            text-align: center;
+            position: relative;
+            z-index: 10; /* Garante que a caixa esteja acima do fundo */
+        }
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+    </style>
+    <script>
+        let score = 0;
+        const goal = 5;
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+            heart.style.left = Math.random() * (window.innerWidth - 50) + 'px';
+            heart.addEventListener('click', collectHeart);
+            document.getElementById('gameContainer').appendChild(heart);
+        }
+
+        function collectHeart(event) {
+            score++;
+            event.target.remove();
+            if (score >= goal) {
+                showMessage();
+            } else {
+                createHeart();
+            }
+        }
+
+        function showMessage() {
+            document.getElementById('gameContainer').style.display = 'none';
+            document.getElementById('message').style.display = 'block';
+        }
+
+        window.onload = function() {
+            for (let i = 0; i < goal; i++) {
+                createHeart();
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="gameContainer"></div>
+    <div id="message" class="message">
+        <h1>Você coletou todos os corações!</h1>
+        <p>Agora, eu tenho uma pergunta muito especial para você...</p>
+        <button class="btn" onclick="window.location.href='pedido.html'">Clique aqui para descobrir</button>
+    </div>
+</body>
+</html>
